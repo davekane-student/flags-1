@@ -1,6 +1,8 @@
 ---
 title: "World Flags Viewer"
 format: html
+resources:
+  - flags/*.png
 execute:
   echo: false
 ---
