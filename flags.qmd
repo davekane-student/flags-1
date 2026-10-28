@@ -8,8 +8,63 @@ execute:
 ---
 
 ```{r}
-# Pass all flag codes (e.g., "ad", "us") from the flags/ folder to Observable JS
-ojs_define(codes = sub("\\.png$", "", list.files("flags", pattern = "\\.png$")))
+library(png)
+
+files <- list.files("flags", pattern = "\\.png$", full.names = TRUE)
+codes <- sub("\\.png$", "", basename(files))
+
+# Summarize a flag's color palette, spatial layout (12x18 grid), and shape
+flag_features <- \(file) {
+  img <- readPNG(file)
+  d <- dim(img)
+  rows <- round(seq(1, d[1], length.out = 12))
+  cols <- round(seq(1, d[2], length.out = 18))
+
+  rgb <- if (length(d) == 2) {
+    rep(as.vector(img[rows, cols]), 3) |> matrix(ncol = 3)
+  } else {
+    img[rows, cols, 1:3] |> matrix(ncol = 3)
+  }
+
+  # Alpha mask for non-rectangular flag shapes (e.g., Nepal)
+  alpha <- if (length(d) == 3 && d[3] == 4) {
+    as.vector(img[rows, cols, 4])
+  } else {
+    rep(1, nrow(rgb))
+  }
+
+  # 64-bin RGB color histogram on visible pixels
+  vis_rgb <- rgb[alpha > 0.5, , drop = FALSE]
+  bins <- pmin(floor(vis_rgb * 4), 3)
+  bucket <- bins[, 1] * 16 + bins[, 2] * 4 + bins[, 3] + 1
+  color_hist <- tabulate(bucket, nbins = 64) / nrow(vis_rgb)
+
+  # Combine layout (spatial RGB), color palette, and shape (aspect ratio + alpha mask)
+  aspect <- (d[2] / d[1]) / 2
+  c(as.vector(rgb * alpha) / 10, color_hist, alpha / 10, aspect)
+}
+
+features <- sapply(files, flag_features) |> t()
+dist_mat <- dist(features) |> as.matrix()
+
+# Find the 3 most similar (skipping identical territory duplicates) and 3 most different
+similar_3 <- lapply(seq_len(nrow(dist_mat)), \(i) {
+  row_d <- dist_mat[i, ]
+  row_d[row_d == 0] <- Inf
+  codes[order(row_d)[1:3]]
+}) |> setNames(codes)
+
+different_3 <- lapply(seq_len(nrow(dist_mat)), \(i) {
+  row_d <- dist_mat[i, ]
+  row_d[i] <- -Inf
+  codes[order(row_d, decreasing = TRUE)[1:3]]
+}) |> setNames(codes)
+
+ojs_define(
+  codes = codes,
+  similar = similar_3,
+  different = different_3
+)
 ```
 
 ```{ojs}
@@ -23,20 +78,41 @@ ukNames = ({
 })
 labelFor = (code) => ukNames[code] ?? regionNames.of(code.toUpperCase()) ?? code
 
-// Dropdown menu to choose a flag
+// Dropdown menu to choose a flag and toggle between similar/different
 viewof selected = Inputs.select(codes, {
   label: "Select a country or region:",
   format: (code) => `${labelFor(code)} (${code})`,
   value: "us"
 })
 
-// Display the selected flag image
+viewof mode = Inputs.radio(["Most similar", "Most different"], {
+  label: "Show 3 flags that are:",
+  value: "Most similar"
+})
+
+matches = mode === "Most similar" ? similar[selected] : different[selected]
+
+// Display the selected flag and the 3 matching flags
 html`<div style="margin-top: 1.5rem;">
-  <h3>${labelFor(selected)}</h3>
+  <h3>Selected: ${labelFor(selected)}</h3>
   <img
     src="flags/${selected}.png"
     alt="Flag of ${labelFor(selected)}"
-    style="max-width: 500px; width: 100%; border: 1px solid #ddd; border-radius: 4px;"
+    style="max-width: 320px; width: 100%; border: 1px solid #ddd; border-radius: 4px;"
   />
+
+  <h3 style="margin-top: 2rem;">3 ${mode} Flags (by color, shape, and layout)</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+    ${matches.map((code, i) => html`
+      <div>
+        <h4>#${i + 1}: ${labelFor(code)}</h4>
+        <img
+          src="flags/${code}.png"
+          alt="Flag of ${labelFor(code)}"
+          style="width: 100%; border: 1px solid #ddd; border-radius: 4px;"
+        />
+      </div>
+    `)}
+  </div>
 </div>`
 ```
