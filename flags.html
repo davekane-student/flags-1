@@ -110,31 +110,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="15" data-source-offset="-71"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 14;"><span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>regionNames <span class="op">=</span> <span class="kw">new</span> <span class="bu">Intl</span><span class="op">.</span><span class="fu">DisplayNames</span>([<span class="st">"en"</span>]<span class="op">,</span> { <span class="dt">type</span><span class="op">:</span> <span class="st">"region"</span> })</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ukNames <span class="op">=</span> ({</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-eng"</span><span class="op">:</span> <span class="st">"England"</span><span class="op">,</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-nir"</span><span class="op">:</span> <span class="st">"Northern Ireland"</span><span class="op">,</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-sct"</span><span class="op">:</span> <span class="st">"Scotland"</span><span class="op">,</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-wls"</span><span class="op">:</span> <span class="st">"Wales"</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>labelFor <span class="op">=</span> (code) <span class="kw">=&gt;</span> ukNames[code] <span class="op">??</span> regionNames<span class="op">.</span><span class="fu">of</span>(code<span class="op">.</span><span class="fu">toUpperCase</span>()) <span class="op">??</span> code</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">// Dropdown menu to choose a flag</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>viewof selected <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(codes<span class="op">,</span> {</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Select a country or region:"</span><span class="op">,</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">format</span><span class="op">:</span> (code) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">labelFor</span>(code)<span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>code<span class="sc">}</span><span class="vs">)`</span><span class="op">,</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="st">"us"</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Display the selected flag image</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="margin-top: 1.5rem;"&gt;</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;h3&gt;</span><span class="sc">${</span><span class="fu">labelFor</span>(selected)<span class="sc">}</span><span class="vs">&lt;/h3&gt;</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;img</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="vs">    src="flags/</span><span class="sc">${</span>selected<span class="sc">}</span><span class="vs">.png"</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="vs">    alt="Flag of </span><span class="sc">${</span><span class="fu">labelFor</span>(selected)<span class="sc">}</span><span class="vs">"</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="vs">    style="max-width: 500px; width: 100%; border: 1px solid #ddd; border-radius: 4px;"</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="vs">  /&gt;</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="17" data-source-offset="-71"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 16;"><span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>regionNames <span class="op">=</span> <span class="kw">new</span> <span class="bu">Intl</span><span class="op">.</span><span class="fu">DisplayNames</span>([<span class="st">"en"</span>]<span class="op">,</span> { <span class="dt">type</span><span class="op">:</span> <span class="st">"region"</span> })</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>ukNames <span class="op">=</span> ({</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-eng"</span><span class="op">:</span> <span class="st">"England"</span><span class="op">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-nir"</span><span class="op">:</span> <span class="st">"Northern Ireland"</span><span class="op">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-sct"</span><span class="op">:</span> <span class="st">"Scotland"</span><span class="op">,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gb-wls"</span><span class="op">:</span> <span class="st">"Wales"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>labelFor <span class="op">=</span> (code) <span class="kw">=&gt;</span> ukNames[code] <span class="op">??</span> regionNames<span class="op">.</span><span class="fu">of</span>(code<span class="op">.</span><span class="fu">toUpperCase</span>()) <span class="op">??</span> code</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">// Dropdown menu to choose a flag</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>viewof selected <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(codes<span class="op">,</span> {</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Select a country or region:"</span><span class="op">,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">format</span><span class="op">:</span> (code) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">labelFor</span>(code)<span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>code<span class="sc">}</span><span class="vs">)`</span><span class="op">,</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="st">"us"</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">// Display the selected flag image</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="margin-top: 1.5rem;"&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;h3&gt;</span><span class="sc">${</span><span class="fu">labelFor</span>(selected)<span class="sc">}</span><span class="vs">&lt;/h3&gt;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;img</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="vs">    src="flags/</span><span class="sc">${</span>selected<span class="sc">}</span><span class="vs">.png"</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="vs">    alt="Flag of </span><span class="sc">${</span><span class="fu">labelFor</span>(selected)<span class="sc">}</span><span class="vs">"</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="vs">    style="max-width: 500px; width: 100%; border: 1px solid #ddd; border-radius: 4px;"</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="vs">  /&gt;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
