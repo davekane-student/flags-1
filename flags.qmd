@@ -1,0 +1,40 @@
+---
+title: "World Flags Viewer"
+format: html
+execute:
+  echo: false
+---
+
+```{r}
+# Pass all flag codes (e.g., "ad", "us") from the flags/ folder to Observable JS
+ojs_define(codes = sub("\\.png$", "", list.files("flags", pattern = "\\.png$")))
+```
+
+```{ojs}
+// Translate 2-letter ISO codes into full country names in the browser
+regionNames = new Intl.DisplayNames(["en"], { type: "region" })
+ukNames = ({
+  "gb-eng": "England",
+  "gb-nir": "Northern Ireland",
+  "gb-sct": "Scotland",
+  "gb-wls": "Wales"
+})
+labelFor = (code) => ukNames[code] ?? regionNames.of(code.toUpperCase()) ?? code
+
+// Dropdown menu to choose a flag
+viewof selected = Inputs.select(codes, {
+  label: "Select a country or region:",
+  format: (code) => `${labelFor(code)} (${code})`,
+  value: "us"
+})
+
+// Display the selected flag image
+html`<div style="margin-top: 1.5rem;">
+  <h3>${labelFor(selected)}</h3>
+  <img
+    src="flags/${selected}.png"
+    alt="Flag of ${labelFor(selected)}"
+    style="max-width: 500px; width: 100%; border: 1px solid #ddd; border-radius: 4px;"
+  />
+</div>`
+```
